@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">RecyclerViewHoteles</string>
+    <string name="error_permission_map">Falta de permisos</string>
+
+
+    <string name="coordenada_actual">Coordenadas del Lugar</string>
+    <string name="coordenada_busqueda">Coordenada de Busqueda</string>
+    <string name="ingrese_las_coordenadas">Ingrese las Coordenadas</string>
+    <string name="latitud">Latitud</string>
+    <string name="longitud">Longitud</string>
+    <string name="obtener">Obtener</string>
+
+    <string name="ubicacion">Tu ubicacion</string>
+
+
+
+
+</resources>
