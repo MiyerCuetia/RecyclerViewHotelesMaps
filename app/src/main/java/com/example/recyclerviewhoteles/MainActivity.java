@@ -19,21 +19,30 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
+    //Hacemos referencia a los componentes graficos del layout activity_main.xml
     EditText etLatitudDes, etLongitudDes;
     Button btnOtenerCoordenadas;
-
-    ArrayList<Lugar> listLugares;
     RecyclerView recyclerViewHotel;
+
+    //Generamos la lista de tipo Lugar
+    ArrayList<Lugar> listLugares;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Inicializamos los componentes graficos del layout activity_main.xml
         etLatitudDes = findViewById(R.id.et_latitudDes);
         etLongitudDes = findViewById(R.id.et_longitudDes);
         btnOtenerCoordenadas = findViewById(R.id.btn_obtenerCoordenadas);
 
+        //Llamamos al metodo objetoRealm() para crear los objetos de tipo Lugar
+        objetoRealm();
+
+        //Asignamos el onClickListener al btnOtenerCoordenadas para enviar la accion como tambien la latitud y longitud
+        //a la actividad o clase de GoogleMaps
         btnOtenerCoordenadas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,11 +70,15 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewHotel = findViewById(R.id.amRvHoteles);
         recyclerViewHotel.setLayoutManager(new LinearLayoutManager(this));
 
+        //Llamamos al metodo llenarLugares() ya que es el encargado de alimentar nuestra lista lugares
         llenarLugares();
 
-        //Creamos una intacia de la clase AdapterHoteles y le pasamos la lista
+        //Creamos una instancia de la clase AdapterHoteles y le pasamos la lista
         AdapterHoteles adapter = new AdapterHoteles(listLugares);
 
+        //Despues de haber creado el metodo setOnClickListener en la clase AdapterHoteles ya la podemos
+        //asignarle el evento onClickListener
+        //Al ocurrir el evento se envia el id del lugar seleccionado a la actividad o clase de GoogleMaps
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,9 +91,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Asigamos el adapter al recycleView
         recyclerViewHotel.setAdapter(adapter);
     }
-    //Creamos los objeto de tipo Lugar
+
+    //Validamos si hay registros, si no hay registros Creamos los objetos de tipo Lugar esto ya que cada
+    // vez que se ejecutaba la Aplicacion duplicaba los registros.
     public void objetoRealm() {
         Realm realm = Realm.getDefaultInstance();
 
@@ -142,13 +158,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //llenarLugares Es el encargado de alimentar nuestra lista listLugares
+    //El metodo llenarLugares Es el encargado de alimentar nuestra lista listLugares
     public void llenarLugares() {
-        //Ubicacion Cali
+        //Quemamos la latitud y longitud  de la Ubicacion Cali a los editext
         etLatitudDes.setText("3.449555");
         etLongitudDes.setText("-76.532526");
 
-        objetoRealm();
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Lugar> results = realm.where(Lugar.class).findAll();
         for (Lugar lugar : results) {

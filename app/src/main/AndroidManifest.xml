@@ -26,7 +26,7 @@
         <!-- Agregué la API KEY al manifiest para poder utilizar la API de GoogleMaps-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="" />
+            android:value="TU_API_KEY" />
         <activity android:name=".GoogleMaps"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
